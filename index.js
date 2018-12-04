@@ -24,7 +24,7 @@ const N_DIV_2 = new BN('7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46
  * var tx = new Transaction(rawTx);
  *
  * @class
- * @param {Buffer | Array | Object} data a transaction can be initiailized with either a buffer containing the RLP serialized transaction or an array of buffers relating to each of the tx Properties, listed in order below in the exmple.
+ * @param {Buffer | Array | Object} data a transaction can be initialized with either a buffer containing the RLP serialized transaction or an array of buffers relating to each of the tx Properties, listed in order below in the exmple.
  *
  * Or lastly an Object containing the Properties of the transaction like in the Usage example.
  *
@@ -35,12 +35,12 @@ const N_DIV_2 = new BN('7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46
  * @param {Buffer} data.gasLimit transaction gas limit
  * @param {Buffer} data.gasPrice transaction gas price
  * @param {Buffer} data.to to the to address
- * @param {Buffer} data.value the amount of ether sent
+ * @param {Buffer} data.value the amount of moac sent
  * @param {Buffer} data.data this will contain the data of the message or the init of a contract
  * @param {Buffer} data.v EC recovery ID
  * @param {Buffer} data.r EC signature parameter
  * @param {Buffer} data.s EC signature parameter
- * @param {Number} data.chainId EIP 155 chainId - mainnet: 1, ropsten: 3
+ * @param {Number} data.chainId EIP 155 chainId - mainnet: 99, testnet: 101
  * */
 
 class Transaction {
@@ -102,7 +102,7 @@ class Transaction {
      * @return {Buffer}
      * @memberof Transaction
      * @name serialize
-     * @see {@link https://github.com/ethereumjs/ethereumjs-util/blob/master/docs/index.md#defineproperties|ethereumjs-util}
+     * @see {@link https://github.com/wanpixiaozi/moacjs-tx/blob/master/docs/index.md#defineproperties|moacjs-util}
      */
     /**
      * Returns the transaction in JSON format
@@ -110,7 +110,7 @@ class Transaction {
      * @return {Array | String}
      * @memberof Transaction
      * @name toJSON
-     * @see {@link https://github.com/ethereumjs/ethereumjs-util/blob/master/docs/index.md#defineproperties|ethereumjs-util}
+     * @see {@link https://github.com/wanpixiaozi/moacjs-tx/blob/master/docs/index.md#defineproperties|moacjs-util}
      */
     // attached serialize
     moacUtil.defineProperties(this, fields, data)
