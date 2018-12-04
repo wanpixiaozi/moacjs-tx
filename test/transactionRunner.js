@@ -1,16 +1,16 @@
 const Tx = require('../index.js')
 const tape = require('tape')
-const ethUtil = require('ethereumjs-util')
+const moacUtil = require('moacjs-util')
 const argv = require('minimist')(process.argv.slice(2))
 const testing = require('ethereumjs-testing')
 const common = require('ethereum-common/params.json')
 
 var txTests = testing.getTests('transaction', argv)
 
-const bufferToHex = ethUtil.bufferToHex
-const addHexPrefix = ethUtil.addHexPrefix
-const stripHexPrefix = ethUtil.stripHexPrefix
-const setLength = ethUtil.setLength
+const bufferToHex = moacUtil.bufferToHex
+const addHexPrefix = moacUtil.addHexPrefix
+const stripHexPrefix = moacUtil.stripHexPrefix
+const setLength = moacUtil.setLength
 
 function addPad (v) {
   if (v.length % 2 === 1) {
@@ -31,7 +31,7 @@ testing.runTests(function (testData, sst, cb) {
   var tTx = testData.transaction
 
   try {
-    var rawTx = ethUtil.toBuffer(testData.rlp)
+    var rawTx = moacUtil.toBuffer(testData.rlp)
     var tx = new Tx(rawTx)
     if (testData.blocknumber !== String(common.homeSteadForkNumber.v)) {
       tx._homestead = false
