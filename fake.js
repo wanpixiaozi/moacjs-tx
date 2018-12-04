@@ -1,7 +1,7 @@
 'use strict'
 
 const Transaction = require('./index.js')
-const ethUtil = require('ethereumjs-util')
+const moacUtil = require('moacjs-util')
 
 /**
  * Creates a new transaction object that doesn't need to be signed
@@ -46,7 +46,7 @@ module.exports = class FakeTransaction extends Transaction {
       get: this.getSenderAddress.bind(self),
       set: function (val) {
         if (val) {
-          self._from = ethUtil.toBuffer(val)
+          self._from = moacUtil.toBuffer(val)
         }
       }
     })
