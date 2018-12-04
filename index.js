@@ -1,7 +1,7 @@
 'use strict'
-const ethUtil = require('ethereumjs-util')
+const moacUtil = require('moacjs-util')
 const fees = require('ethereum-common/params.json')
-const BN = ethUtil.BN
+const BN = moacUtil.BN
 
 // secp256k1n/2
 const N_DIV_2 = new BN('7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0', 16)
@@ -113,7 +113,7 @@ class Transaction {
      * @see {@link https://github.com/ethereumjs/ethereumjs-util/blob/master/docs/index.md#defineproperties|ethereumjs-util}
      */
     // attached serialize
-    ethUtil.defineProperties(this, fields, data)
+    moacUtil.defineProperties(this, fields, data)
 
     /**
      * @property {Buffer} from (read only) sender address of this transaction, mathematically derived from other parameters.
@@ -127,7 +127,7 @@ class Transaction {
     })
 
     // calculate chainId from signature
-    let sigV = ethUtil.bufferToInt(this.v)
+    let sigV = moacUtil.bufferToInt(this.v)
     let chainId = Math.floor((sigV - 35) / 2)
     if (chainId < 0) chainId = 0
 
@@ -174,7 +174,7 @@ class Transaction {
     }
 
     // create hash
-    return ethUtil.rlphash(items)
+    return moacUtil.rlphash(items)
   }
 
   /**
@@ -194,7 +194,7 @@ class Transaction {
       return this._from
     }
     const pubkey = this.getSenderPublicKey()
-    this._from = ethUtil.publicToAddress(pubkey)
+    this._from = moacUtil.publicToAddress(pubkey)
     return this._from
   }
 
@@ -221,11 +221,11 @@ class Transaction {
     }
 
     try {
-      let v = ethUtil.bufferToInt(this.v)
+      let v = moacUtil.bufferToInt(this.v)
       if (this._chainId > 0) {
         v -= this._chainId * 2 + 8
       }
-      this._senderPubKey = ethUtil.ecrecover(msgHash, v, this.r, this.s)
+      this._senderPubKey = moacUtil.ecrecover(msgHash, v, this.r, this.s)
     } catch (e) {
       return false
     }
@@ -239,7 +239,7 @@ class Transaction {
    */
   sign (privateKey) {
     const msgHash = this.hash(false)
-    const sig = ethUtil.ecsign(msgHash, privateKey)
+    const sig = moacUtil.ecsign(msgHash, privateKey)
     if (this._chainId > 0) {
       sig.v += this._chainId * 2 + 8
     }
