@@ -1,4 +1,4 @@
-process.env.ethTest = 'TransactionTests'
+process.env.moacTest = 'TransactionTests'
 
 module.exports = function (config) {
   config.set({
