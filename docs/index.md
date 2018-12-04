@@ -236,7 +236,7 @@ Returns **[Buffer][24]**
 
 [22]: #properties-1
 
-[23]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L46-L305 "Source code on GitHub"
+[23]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L46-L305 "Source code on GitHub"
 
 [24]: https://nodejs.org/api/buffer.html
 
@@ -246,34 +246,34 @@ Returns **[Buffer][24]**
 
 [27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[28]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L143-L145 "Source code on GitHub"
+[28]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L143-L145 "Source code on GitHub"
 
 [29]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[30]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L152-L178 "Source code on GitHub"
+[30]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L152-L178 "Source code on GitHub"
 
-[31]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L184-L186 "Source code on GitHub"
+[31]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L184-L186 "Source code on GitHub"
 
-[32]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L192-L199 "Source code on GitHub"
+[32]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L192-L199 "Source code on GitHub"
 
-[33]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L205-L210 "Source code on GitHub"
+[33]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L205-L210 "Source code on GitHub"
 
-[34]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L216-L234 "Source code on GitHub"
+[34]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L216-L234 "Source code on GitHub"
 
-[35]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L240-L247 "Source code on GitHub"
+[35]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L240-L247 "Source code on GitHub"
 
-[36]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L253-L260 "Source code on GitHub"
+[36]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L253-L260 "Source code on GitHub"
 
-[37]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L266-L272 "Source code on GitHub"
+[37]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L266-L272 "Source code on GitHub"
 
-[38]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L278-L282 "Source code on GitHub"
+[38]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L278-L282 "Source code on GitHub"
 
-[39]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L289-L304 "Source code on GitHub"
+[39]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L289-L304 "Source code on GitHub"
 
 [40]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[41]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L116-L116 "Source code on GitHub"
+[41]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L116-L116 "Source code on GitHub"
 
 [42]: https://github.com/ethereumjs/ethereumjs-util/blob/master/docs/index.md#defineproperties
 
-[43]: https://git@github.com/:danjm/ethereumjs-tx/blob/ef8e9059eea7ddcc4f511e39142655d0a95ab7ef/index.js#L123-L127 "Source code on GitHub"
+[43]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L123-L127 "Source code on GitHub"
