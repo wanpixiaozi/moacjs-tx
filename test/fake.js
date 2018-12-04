@@ -1,5 +1,5 @@
 const tape = require('tape')
-const utils = require('ethereumjs-util')
+const utils = require('moacjs-util')
 const FakeTransaction = require('../fake.js')
 
 // Use private key 0x0000000000000000000000000000000000000000000000000000000000000001 as 'from' Account
