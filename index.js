@@ -2,9 +2,40 @@
 const moacUtil = require('moacjs-util')
 const fees = require('ethereum-common/params.json')
 const BN = moacUtil.BN
+const RLP = require('eth-lib/lib/rlp')
+const Bytes = require('eth-lib/lib/bytes')
+const utils = require('./utils.js')
+const Hash = require('eth-lib/lib/hash')
+const secp256k1 = require('secp256k1')
 
 // secp256k1n/2
 const N_DIV_2 = new BN('7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0', 16)
+
+/**
+ * ECDSA sign
+ * @param {Buffer} msgHash
+ * @param {Buffer} privateKey
+ * @return {Object}
+ */
+function ecsign (msgHash, privateKey) {
+  // Convert the input string to Buffer
+  if (typeof msgHash === 'string') {
+    if (utils.isHexString(msgHash)) {
+      msgHash = Buffer.from(utils.makeEven(utils.stripHexPrefix(msgHash)), 'hex')
+    }
+  }
+
+  var privateKeyBuf = new Buffer(privateKey, 'hex')
+
+  var sig = secp256k1.sign(msgHash, privateKeyBuf)
+
+  var ret = {}
+  ret.r = sig.signature.slice(0, 32)
+  ret.s = sig.signature.slice(32, 64)
+  ret.v = sig.recovery + 27
+
+  return ret
+}
 
 /**
  * Creates a new transaction object.
@@ -134,6 +165,8 @@ class Transaction {
     // set chainId
     this._chainId = chainId || data.chainId || 0
     this._homestead = true
+
+    this.tx = data // used for moac sign process
   }
 
   /**
@@ -150,7 +183,6 @@ class Transaction {
    * @return {Buffer}
    */
   hash (includeSignature) {
-    console.log('this is ', this);
     if (includeSignature === undefined) includeSignature = true
 
     // EIP155 spec:
@@ -237,48 +269,51 @@ class Transaction {
   /**
    * sign a transaction with a given private key
    * @param {Buffer} privateKey Must be 32 bytes in length
-   */
-  oldsign (privateKey) {
-    const msgHash = this.hash(false)
-    const sig = moacUtil.ecsign(msgHash, privateKey)
-    if (this._chainId > 0) {
-      sig.v += this._chainId * 2 + 8
-    }
-    Object.assign(this, sig)
-  }
+   * eth old func, moac never use it
+   *
+   * sign (privateKey) {
+   *  const msgHash = this.hash(false)
+   *  const sig = moacUtil.ecsign(msgHash, privateKey)
+   *  if (this._chainId > 0) {
+   *     sig.v += this._chainId * 2 + 8
+   *  }
+   *  Object.assign(this, sig)
+   * }
+   **/
 
   /*
- * A simple signTransaction function to sign
- * the input TX with private key.
- * Input:
- * tx - a JSON format object contains the input TX info
- * privateKey - a string format of the private key
- * Output:
- * rawTransaction - a String, can be used with
- *                  mc.sendRawTransaction
- *
- *
-*/
-  sign(privateKey) {
-    console.log('enter sign process')
+   * A simple signTransaction function to sign
+   * the input TX with private key.
+   * Input:
+   * tx - a JSON format object contains the input TX info
+   * privateKey - a string format of the private key
+   * Output:
+   * rawTransaction - a String, can be used with
+   *                  chain3.mc.sendRawTransaction
+   *
+   *
+  */
+  sign (privateKey) {
+    const tx = this.tx
+    // console.log('enter sign process')
     // Check the input fields of the tx
-    if (this.chainId < 1) {
+    if (tx.chainId < 1) {
       return new Error('"Chain ID" is invalid')
     }
 
-    if (!this.gas && !this.gasLimit) {
+    if (!tx.gas && !tx.gasLimit) {
       return new Error('"gas" is missing')
     }
 
-    if (this.nonce < 0 ||
-      this.gasLimit < 0 ||
-      this.gasPrice < 0 ||
-      this.chainId < 0) {
+    if (tx.nonce < 0 ||
+      tx.gasLimit < 0 ||
+      tx.gasPrice < 0 ||
+      tx.chainId < 0) {
       return new Error('Gas, gasPrice, nonce or chainId is lower than 0')
     }
     // Sharding Flag only accept the
     // If input has not sharding flag, set it to 0 as global TX.
-    if (this.shardingFlag === undefined) {
+    if (tx.shardingFlag === undefined) {
       // console.log("Set default sharding to 0");
       this.shardingFlag = 0
     }
@@ -286,15 +321,15 @@ class Transaction {
     try {
       // Make sure all the number fields are in HEX format
 
-      var transaction = this
-      transaction.to = this.to || '0x' // Can be zero, for contract creation
-      transaction.data = this.data || '0x' // can be zero for general TXs
-      transaction.value = this.value || '0x' // can be zero for contract call
-      transaction.chainId = utils.numberToHex(this.chainId)
-      transaction.shardingFlag = utils.numberToHex(this.shardingFlag)
+      var transaction = tx
+      transaction.to = tx.to || '0x' // Can be zero, for contract creation
+      transaction.data = tx.data || '0x' // can be zero for general TXs
+      transaction.value = tx.value || '0x' // can be zero for contract call
+      transaction.chainId = utils.numberToHex(tx.chainId)
+      transaction.shardingFlag = utils.numberToHex(tx.shardingFlag)
       transaction.systemContract = '0x0' // System contract flag, always = 0
-      transaction.via = this.via || '0x' // vnode subchain address
-      console.log('RLP encoded transaction:', transaction)
+      transaction.via = tx.via || '0x' // vnode subchain address
+      // console.log('RLP encoded transaction:', transaction)
       // Encode the TX for signature
       //   type txdata struct {
       // AccountNonce uint64          `json:"nonce"    gencodec:"required"`
@@ -312,7 +347,7 @@ class Transaction {
       // R *big.Int `json:"r" gencodec:"required"`
       // S *big.Int `json:"s" gencodec:"required"`
       // console.log("chain3 tx:", transaction);
-      var rlpEncoded = RLP.encode([
+      const rlpEncoded = RLP.encode([
         Bytes.fromNat(transaction.nonce),
         Bytes.fromNat(transaction.systemContract),
         Bytes.fromNat(transaction.gasPrice),
@@ -321,42 +356,39 @@ class Transaction {
         Bytes.fromNat(transaction.value),
         transaction.data,
         Bytes.fromNat(transaction.shardingFlag),
-        // transaction.via.toLowerCase()]);
         transaction.via.toLowerCase(),
         Bytes.fromNat(transaction.chainId),
-        "0x",
-        "0x"])
-      console.log('chain3 rlpEncoded:', rlpEncoded)
+        '0x',
+        '0x'])
+      // console.log('chain3 rlpEncoded:', rlpEncoded)
 
-      var hash = Hash.keccak256(rlpEncoded)
-      console.log('chain3 hashed after rlpEncoded:', hash)
-      // return;
+      const hash = Hash.keccak256(rlpEncoded)
+      // console.log('chain3 hashed after rlpEncoded:', hash)
+
       // for MOAC, keep 9 fields instead of 6
-      var vPos = 9
+      const vPos = 9
       // Sign the hash with the private key to produce the
       // V, R, S
-      var newsign = ecsign(hash, stripHexPrefix(privateKey))
+      const newsign = ecsign(hash, utils.stripHexPrefix(privateKey))
       // console.log("Sign:", privateKey);
       // console.log("chain3 newsign:", newsign);
 
-      var rawTx = RLP.decode(rlpEncoded).slice(0, vPos + 3)
+      const rawTx = RLP.decode(rlpEncoded).slice(0, vPos + 3)
 
       // Replace the V field with chainID info
-      var newV = newsign.v + 8 + transaction.chainId * 2
+      const newV = newsign.v + 8 + transaction.chainId * 2
 
       // Add trimLeadingZero to avoid '0x00' after makeEven
-      // dont allow uneven r,s,v values
-      rawTx[vPos] = trimLeadingZero(makeEven(bufferToHex(newV)))
-      rawTx[vPos + 1] = trimLeadingZero(makeEven(bufferToHex(newsign.r)))
-      rawTx[vPos + 2] = trimLeadingZero(makeEven(bufferToHex(newsign.s)))
-      console.log('chain3 Signed rawTx:', rawTx)
-      var rawTransaction = RLP.encode(rawTx)
+      // don't allow uneven r,s,v values
+      rawTx[vPos] = utils.trimLeadingZero(utils.makeEven(utils.bufferToHex(newV)))
+      rawTx[vPos + 1] = utils.trimLeadingZero(utils.makeEven(utils.bufferToHex(newsign.r)))
+      rawTx[vPos + 2] = utils.trimLeadingZero(utils.makeEven(utils.bufferToHex(newsign.s)))
+      // console.log('chain3 Signed rawTx:', rawTx)
+      return RLP.encode(rawTx)
     } catch (e) {
       return e
     }
-
-    return rawTransaction
-  };
+  }
 
   /**
    * The amount of gas paid for the data in this tx
