@@ -1,7 +1,7 @@
 {
-  "name": "ethereumjs-tx",
-  "version": "1.3.7",
-  "description": "An simple module for creating, manipulating and signing ethereum transactions",
+  "name": "moacjs-tx",
+  "version": "1.1.0",
+  "description": "A simple module for creating, manipulating and signing moac transactions",
   "main": "es5/index.js",
   "scripts": {
     "coverage": "istanbul cover ./test/index.js",
@@ -14,14 +14,20 @@
     "build:docs": "documentation build ./index.js --github -f md > ./docs/index.md && contributor"
   },
   "keywords": [
-    "ethereum",
+    "moac",
     "transactions"
   ],
-  "author": "mjbecze <mb@ethdev.com>",
+  "author": "caizl <caizl2002@hotmail.com>",
   "license": "MPL-2.0",
   "dependencies": {
+    "chain3": "^0.1.14",
+    "eth-lib": "^0.2.8",
     "ethereum-common": "^0.0.18",
-    "ethereumjs-util": "^5.0.0"
+    "moacjs-util": "^1.0.1",
+    "number-to-bn": "^1.7.0",
+    "safe-buffer": "^5.1.2",
+    "secp256k1": "^3.5.2",
+    "underscore": "^1.9.1"
   },
   "devDependencies": {
     "async": "^2.0.0",
@@ -29,6 +35,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.16.0",
     "babelify": "^7.3.0",
+    "bignumber": "^1.1.0",
     "browserify": "^13.0.0",
     "contributor": "^0.1.25",
     "coveralls": "^2.11.4",
@@ -41,18 +48,19 @@
     "karma-env-preprocessor": "^0.1.1",
     "karma-firefox-launcher": "^1.0.0",
     "karma-tap": "^2.0.1",
+    "keythereum": "^1.0.4",
     "minimist": "^1.2.0",
     "standard": "^7.1.2",
     "tape": "^4.0.3"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ethereumjs/ethereumjs-tx.git"
+    "url": "https://github.com/wanpixiaozi/moacjs-tx.git"
   },
   "bugs": {
-    "url": "https://github.com/ethereumjs/ethereumjs-tx/issues"
+    "url": "https://github.com/wanpixiaozi/moacjs-tx/issues"
   },
-  "homepage": "https://github.com/ethereumjs/ethereumjs-tx",
+  "homepage": "https://github.com/wanpixiaozi/moacjs-tx",
   "standard": {
     "ignore": [
       "es5/**",
@@ -62,6 +70,10 @@
     ]
   },
   "contributors": [
+    {
+      "name": "mjbecze",
+      "email": "mb@ethdev.com"
+    },
     {
       "name": "<-c-g-> ",
       "email": "christophergewecke@gmail.com",
