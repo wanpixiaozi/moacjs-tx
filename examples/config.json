@@ -1,0 +1,6 @@
+{
+  "vnodeDatadir": "D:\\nuwa-vnode1.0.2.win\\moacnode",
+  "vnodeRpcAddr": "http://gateway.moac.io/testnet",
+  "fromAddress": "0x83D6bCcD4a08082F0a46A73BF3d1e314147eC94E",
+  "password": "123456"
+}
