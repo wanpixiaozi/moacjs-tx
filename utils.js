@@ -121,7 +121,7 @@ function toBuffer (v) {
       v = Buffer.from(v)
     } else if (typeof v === 'string') {
       if (isHexString(v)) {
-        v = Buffer.from(padToEven(stripHexPrefix(v)), 'hex')
+        // v = Buffer.from(padToEven(stripHexPrefix(v)), 'hex')
       } else {
         v = Buffer.from(v)
       }
