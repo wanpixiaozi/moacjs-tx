@@ -16,8 +16,10 @@ function isHexString (value, length) {
     return false
   }
 
-  if (length && value.length !== 2 + 2 * length) {
-    return false
+  if (length) {
+    if (value.length !== (2 + 2 * length)) {
+      return false
+    }
   }
 
   return true
@@ -112,6 +114,17 @@ function intToBuffer (i) {
 }
 
 /**
+ * Pads a `String` to have an even length
+ * @method padToEven
+ * @param {String} a
+ * @return {String}
+ */
+var padToEven = function (a) {
+  if (a.length % 2) a = '0' + a
+  return a
+}
+
+/**
  * Attempts to turn a value into a `Buffer`. As input it supports `Buffer`, `String`, `Number`, null/undefined, `BN` and other objects with a `toArray()` method.
  * @param {*} v the value
  */
@@ -121,7 +134,7 @@ function toBuffer (v) {
       v = Buffer.from(v)
     } else if (typeof v === 'string') {
       if (isHexString(v)) {
-        // v = Buffer.from(padToEven(stripHexPrefix(v)), 'hex')
+        v = Buffer.from(padToEven(stripHexPrefix(v)), 'hex')
       } else {
         v = Buffer.from(v)
       }
