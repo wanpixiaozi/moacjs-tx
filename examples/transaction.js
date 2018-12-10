@@ -1,16 +1,50 @@
 const Chain3 = require('chain3')
 const Tx = require('../index.js')
-const keythereum = require('keythereum')
+// const keythereum = require('keythereum')
 
-const vnodeRpcAddr = 'http://gateway.moac.io/testnet' // vnode rpc addr & port, commonly is "http://localhost:8545"
+const vnodeRpcAddr = 'http://localhost:8545' // vnode rpc addr & port, commonly is "http://localhost:8545"
 const chain3 = new Chain3(new Chain3.providers.HttpProvider(vnodeRpcAddr))
-const myJson = require('./config.json')
+// const myJson = require('./config.json')
 
-var vnodeDatadir = myJson.vnodeDatadir // moacnode目录，根据实际修改
+// var vnodeDatadir = myJson.vnodeDatadir // moacnode目录，根据实际修改
 var fromAddress = '0x83D6bCcD4a08082F0a46A73BF3d1e314147eC94E'
-var password = myJson.password  // 账号密码，根据实际修改
-var keyObject = keythereum.importFromFile(fromAddress, vnodeDatadir)
-var fromSecret = keythereum.recover(password, keyObject)        // 私钥
+// var password = myJson.password  // 账号密码，根据实际修改
+// var keyObject = keythereum.importFromFile(fromAddress, vnodeDatadir)
+// var fromSecret = keythereum.recover(password, keyObject)        // 私钥
+// var newKey = JSON.parse(JSON.stringify(fromSecret))
+// console.log('from secret is ', newKey)
+var fromSecret = [ 120,
+  16,
+  188,
+  42,
+  99,
+  150,
+  25,
+  246,
+  22,
+  6,
+  183,
+  137,
+  237,
+  5,
+  114,
+  59,
+  148,
+  58,
+  87,
+  120,
+  89,
+  65,
+  34,
+  95,
+  28,
+  215,
+  16,
+  160,
+  29,
+  196,
+  206,
+  243 ]
 
 function sendTx (amount, toAddress) {
   var txcount = chain3.mc.getTransactionCount(fromAddress)
@@ -36,11 +70,18 @@ function sendTx (amount, toAddress) {
   }
   console.log('rawTx is ', rawTx)
   var tx = new Tx(rawTx)
+
+  // test
+  // tx.sign(fromSecret)
+
+  // var serializedTx = tx.serialize()
+  // console.log('0x' + serializedTx.toString('hex'))
+
   // 用私钥签名交易信息
   var serializedTx = tx.sign(fromSecret)
-
-  console.log('serializedTx is ', serializedTx)
-
+  console.log(serializedTx)
+  // console.log('serializedTx is ', serializedTx)
+  // chain3.mc.sendRawTransaction(('0x' + serializedTx.toString('hex')), function (err, hash) {
   chain3.mc.sendRawTransaction(serializedTx, function (err, hash) {
     if (!err) {
       console.log('succeed: ', hash)
