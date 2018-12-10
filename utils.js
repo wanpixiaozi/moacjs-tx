@@ -2,28 +2,7 @@ const BN = require('bn.js')
 const numberToBN = require('number-to-bn')
 const _ = require('underscore')
 const Buffer = require('safe-buffer').Buffer
-
-/**
- * Is the string a hex string.
- *
- * @method check if string is hex string of specific length
- * @param {String} value
- * @param {Number} length
- * @returns {Boolean} output the string is a hex string
- */
-function isHexString (value, length) {
-  if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
-    return false
-  }
-
-  if (length) {
-    if (value.length !== (2 + 2 * length)) {
-      return false
-    }
-  }
-
-  return true
-}
+const moacUtil = require('moacjs-util')
 
 /**
  * This function is to resolve the issue
@@ -34,18 +13,6 @@ function makeEven (hex) {
     hex = hex.replace('0x', '0x0')
   }
   return hex
-}
-
-function isHexPrefixed (str) {
-  return str.slice(0, 2) === '0x'
-}
-
-// Removes 0x from a given String
-function stripHexPrefix (str) {
-  if (typeof str !== 'string') {
-    return str
-  }
-  return isHexPrefixed(str) ? str.slice(2) : str
 }
 
 /**
@@ -75,7 +42,7 @@ function numberToHex (value) {
     return value
   }
 
-  if (!isFinite(value) && !isHexString(value)) {
+  if (!isFinite(value) && !moacUtil.isHexString(value)) {
     throw new Error('Given input "' + value + '" is not a number.')
   }
 
@@ -94,38 +61,8 @@ function trimLeadingZero (hex) {
 }
 
 /**
- * RLP usage, the i
-*/
-function intToHex (i) {
-  var hex = i.toString(16)
-  if (hex.length % 2) {
-    hex = '0' + hex
-  }
-
-  return hex
-}
-
-/*
- * Transfer
-*/
-function intToBuffer (i) {
-  var hex = intToHex(i)
-  return new Buffer(hex, 'hex')
-}
-
-/**
- * Pads a `String` to have an even length
- * @method padToEven
- * @param {String} a
- * @return {String}
- */
-var padToEven = function (a) {
-  if (a.length % 2) a = '0' + a
-  return a
-}
-
-/**
- * Attempts to turn a value into a `Buffer`. As input it supports `Buffer`, `String`, `Number`, null/undefined, `BN` and other objects with a `toArray()` method.
+ * Attempts to turn a value into a `Buffer`. As input it supports `Buffer`, `String`, `Number`,
+ * null/undefined, `BN` and other objects with a `toArray()` method.
  * @param {*} v the value
  */
 function toBuffer (v) {
@@ -133,13 +70,13 @@ function toBuffer (v) {
     if (Array.isArray(v)) {
       v = Buffer.from(v)
     } else if (typeof v === 'string') {
-      if (isHexString(v)) {
-        v = Buffer.from(padToEven(stripHexPrefix(v)), 'hex')
+      if (moacUtil.isHexString(v)) {
+        v = Buffer.from(moacUtil.padToEven(moacUtil.stripHexPrefix(v)), 'hex')
       } else {
         v = Buffer.from(v)
       }
     } else if (typeof v === 'number') {
-      v = intToBuffer(v)
+      v = moacUtil.intToBuffer(v)
     } else if (v === null || v === undefined) {
       v = Buffer.allocUnsafe(0)
     } else if (v.toArray) {
@@ -166,10 +103,7 @@ module.exports = {
   toBuffer: toBuffer,
   bufferToHex: bufferToHex,
   trimLeadingZero: trimLeadingZero,
-  isHexString: isHexString,
   makeEven: makeEven,
-  isHexPrefixed: isHexPrefixed,
-  stripHexPrefix: stripHexPrefix,
   toBN: toBN,
   numberToHex: numberToHex
 }
