@@ -2,52 +2,77 @@
 
 ### Table of Contents
 
--   [Transaction][1]
+-   [ecsign][1]
     -   [Parameters][2]
-    -   [Properties][3]
-    -   [Examples][4]
-    -   [toCreationAddress][5]
-    -   [hash][6]
-        -   [Parameters][7]
-    -   [getChainId][8]
-    -   [getSenderAddress][9]
-    -   [getSenderPublicKey][10]
-    -   [verifySignature][11]
-    -   [sign][12]
-        -   [Parameters][13]
-    -   [getDataFee][14]
-    -   [getBaseFee][15]
-    -   [getUpfrontCost][16]
-    -   [validate][17]
-        -   [Parameters][18]
-    -   [toJSON][19]
-    -   [serialize][20]
-    -   [from][21]
-        -   [Properties][22]
+-   [Transaction][3]
+    -   [Parameters][4]
+    -   [Properties][5]
+    -   [Examples][6]
+    -   [toCreationAddress][7]
+    -   [hash][8]
+        -   [Parameters][9]
+    -   [getChainId][10]
+    -   [getSenderAddress][11]
+    -   [getSenderPublicKey][12]
+    -   [verifySignature][13]
+    -   [sign][14]
+        -   [Parameters][15]
+    -   [getDataFee][16]
+    -   [getBaseFee][17]
+    -   [getUpfrontCost][18]
+    -   [validate][19]
+        -   [Parameters][20]
+    -   [serialize][21]
+    -   [toJSON][22]
+    -   [from][23]
+        -   [Properties][24]
+-   [makeEven][25]
+    -   [Parameters][26]
+-   [toBN][27]
+    -   [Parameters][28]
+-   [numberToHex][29]
+    -   [Parameters][30]
+-   [toBuffer][31]
+    -   [Parameters][32]
+-   [bufferToHex][33]
+    -   [Parameters][34]
+
+## ecsign
+
+[index.js:22-40][35]
+
+ECDSA sign
+
+### Parameters
+
+-   `msgHash` **[Buffer][36]** 
+-   `privateKey` **[Buffer][36]** 
+
+Returns **[Object][37]** 
 
 ## Transaction
 
-[index.js:46-305][23]
+[index.js:79-425][38]
 
 Creates a new transaction object.
 
 ### Parameters
 
--   `data` **([Buffer][24] \| [Array][25] \| [Object][26])** a transaction can be initiailized with either a buffer containing the RLP serialized transaction or an array of buffers relating to each of the tx Properties, listed in order below in the exmple.Or lastly an Object containing the Properties of the transaction like in the Usage example.For Object and Arrays each of the elements can either be a Buffer, a hex-prefixed (0x) String , Number, or an object with a toBuffer method such as Bignum
-    -   `data.nonce` **[Buffer][24]** nonce number
-    -   `data.gasLimit` **[Buffer][24]** transaction gas limit
-    -   `data.gasPrice` **[Buffer][24]** transaction gas price
-    -   `data.to` **[Buffer][24]** to the to address
-    -   `data.value` **[Buffer][24]** the amount of ether sent
-    -   `data.data` **[Buffer][24]** this will contain the data of the message or the init of a contract
-    -   `data.v` **[Buffer][24]** EC recovery ID
-    -   `data.r` **[Buffer][24]** EC signature parameter
-    -   `data.s` **[Buffer][24]** EC signature parameter
-    -   `data.chainId` **[Number][27]** EIP 155 chainId - mainnet: 1, ropsten: 3
+-   `data` **([Buffer][36] \| [Array][39] \| [Object][37])** a transaction can be initialized with either a buffer containing the RLP serialized transaction or an array of buffers relating to each of the tx Properties, listed in order below in the exmple.Or lastly an Object containing the Properties of the transaction like in the Usage example.For Object and Arrays each of the elements can either be a Buffer, a hex-prefixed (0x) String , Number, or an object with a toBuffer method such as Bignum
+    -   `data.nonce` **[Buffer][36]** nonce number
+    -   `data.gasLimit` **[Buffer][36]** transaction gas limit
+    -   `data.gasPrice` **[Buffer][36]** transaction gas price
+    -   `data.to` **[Buffer][36]** to the to address
+    -   `data.value` **[Buffer][36]** the amount of moac sent
+    -   `data.data` **[Buffer][36]** this will contain the data of the message or the init of a contract
+    -   `data.v` **[Buffer][36]** EC recovery ID
+    -   `data.r` **[Buffer][36]** EC signature parameter
+    -   `data.s` **[Buffer][36]** EC signature parameter
+    -   `data.chainId` **[Number][40]** moac chainId - mainnet: 99, testnet: 101
 
 ### Properties
 
--   `raw` **[Buffer][24]** The raw rlp encoded transaction
+-   `raw` **[Buffer][36]** The raw rlp encoded transaction
 
 ### Examples
 
@@ -68,69 +93,78 @@ var tx = new Transaction(rawTx);
 
 ### toCreationAddress
 
-[index.js:143-145][28]
+[index.js:178-180][41]
 
 If the tx's `to` is to the creation address
 
-Returns **[Boolean][29]** 
+Returns **[Boolean][42]** 
 
 ### hash
 
-[index.js:152-178][30]
+[index.js:187-213][43]
 
 Computes a sha3-256 hash of the serialized tx
 
 #### Parameters
 
--   `includeSignature` **[Boolean][29]** whether or not to inculde the signature (optional, default `true`)
+-   `includeSignature` **[Boolean][42]** whether or not to inculde the signature (optional, default `true`)
 
-Returns **[Buffer][24]** 
+Returns **[Buffer][36]** 
 
 ### getChainId
 
-[index.js:184-186][31]
+[index.js:219-221][44]
 
 returns chain ID
 
-Returns **[Buffer][24]** 
+Returns **[Buffer][36]** 
 
 ### getSenderAddress
 
-[index.js:192-199][32]
+[index.js:227-234][45]
 
 returns the sender's address
 
-Returns **[Buffer][24]** 
+Returns **[Buffer][36]** 
 
 ### getSenderPublicKey
 
-[index.js:205-210][33]
+[index.js:240-245][46]
 
 returns the public key of the sender
 
-Returns **[Buffer][24]** 
+Returns **[Buffer][36]** 
 
 ### verifySignature
 
-[index.js:216-234][34]
+[index.js:251-269][47]
 
 Determines if the signature is valid
 
-Returns **[Boolean][29]** 
+Returns **[Boolean][42]** 
 
 ### sign
 
-[index.js:240-247][35]
+[index.js:298-367][48]
 
 sign a transaction with a given private key
 
 #### Parameters
 
--   `privateKey` **[Buffer][24]** Must be 32 bytes in length
+-   `privateKey` **[Buffer][36]** Must be 32 bytes in length
+    eth old func, moac never use itsign (privateKey) {
+     const msgHash = this.hash(false)
+     const sig = moacUtil.ecsign(msgHash, privateKey)
+     if (this.\_chainId > 0) {
+        sig.v += this.\_chainId _ 2 + 8
+     }
+     Object.assign(this, sig)
+    }
+    _
 
 ### getDataFee
 
-[index.js:253-260][36]
+[index.js:373-380][49]
 
 The amount of gas paid for the data in this tx
 
@@ -138,7 +172,7 @@ Returns **BN**
 
 ### getBaseFee
 
-[index.js:266-272][37]
+[index.js:386-392][50]
 
 the minimum amount of gas the tx must have (DataFee + TxFee + Creation Fee)
 
@@ -146,7 +180,7 @@ Returns **BN**
 
 ### getUpfrontCost
 
-[index.js:278-282][38]
+[index.js:398-402][51]
 
 the up front amount that an account must have for this transaction to be valid
 
@@ -154,126 +188,222 @@ Returns **BN**
 
 ### validate
 
-[index.js:289-304][39]
+[index.js:409-424][52]
 
 validates the signature and checks to see if it has enough gas
 
 #### Parameters
 
--   `stringError` **[Boolean][29]** whether to return a string with a description of why the validation failed or return a Boolean (optional, default `false`)
+-   `stringError` **[Boolean][42]** whether to return a string with a description of why the validation failed or return a Boolean (optional, default `false`)
 
-Returns **([Boolean][29] \| [String][40])** 
-
-### toJSON
-
-[index.js:116-116][41]
-
--   **See: [ethereumjs-util][42]**
-
-Returns the transaction in JSON format
-
-Returns **([Array][25] \| [String][40])** 
+Returns **([Boolean][42] \| [String][53])** 
 
 ### serialize
 
-[index.js:116-116][41]
+[index.js:149-149][54]
 
--   **See: [ethereumjs-util][42]**
+-   **See: [moacjs-util][55]**
 
 Returns the rlp encoding of the transaction
 
-Returns **[Buffer][24]** 
+Returns **[Buffer][36]** 
+
+### toJSON
+
+[index.js:149-149][54]
+
+-   **See: [moacjs-util][55]**
+
+Returns the transaction in JSON format
+
+Returns **([Array][39] \| [String][53])** 
 
 ### from
 
-[index.js:123-127][43]
+[index.js:156-160][56]
 
 #### Properties
 
--   `from` **[Buffer][24]** (read only) sender address of this transaction, mathematically derived from other parameters.
+-   `from` **[Buffer][36]** (read only) sender address of this transaction, mathematically derived from other parameters.
 
-[1]: #transaction
+## makeEven
+
+[index.js:430-435][57]
+
+This function is to resolve the issue
+[https://github.com/ethereum/web3.js/issues/1170][58]
+
+### Parameters
+
+-   `hex`  
+
+## toBN
+
+[index.js:444-450][59]
+
+Takes an input and transforms it into an BN
+
+### Parameters
+
+-   `number` **([Number][40] \| [String][53] | BN)** , string, HEX string or BN
+
+Returns **BN** BN
+
+## numberToHex
+
+[index.js:459-472][60]
+
+Converts value to it's hex representation
+
+### Parameters
+
+-   `value` **([String][53] \| [Number][40] | BN)** 
+
+Returns **[String][53]** 
+
+## toBuffer
+
+[index.js:487-509][61]
+
+Attempts to turn a value into a `Buffer`. As input it supports `Buffer`, `String`, `Number`,
+null/undefined, `BN` and other objects with a `toArray()` method.
+
+### Parameters
+
+-   `v` **any** the value
+
+## bufferToHex
+
+[index.js:516-519][62]
+
+Converts a `Buffer` into a hex `String`
+
+### Parameters
+
+-   `buf` **[Buffer][36]** 
+
+Returns **[String][53]** 
+
+[1]: #ecsign
 
 [2]: #parameters
 
-[3]: #properties
+[3]: #transaction
 
-[4]: #examples
+[4]: #parameters-1
 
-[5]: #tocreationaddress
+[5]: #properties
 
-[6]: #hash
+[6]: #examples
 
-[7]: #parameters-1
+[7]: #tocreationaddress
 
-[8]: #getchainid
+[8]: #hash
 
-[9]: #getsenderaddress
+[9]: #parameters-2
 
-[10]: #getsenderpublickey
+[10]: #getchainid
 
-[11]: #verifysignature
+[11]: #getsenderaddress
 
-[12]: #sign
+[12]: #getsenderpublickey
 
-[13]: #parameters-2
+[13]: #verifysignature
 
-[14]: #getdatafee
+[14]: #sign
 
-[15]: #getbasefee
+[15]: #parameters-3
 
-[16]: #getupfrontcost
+[16]: #getdatafee
 
-[17]: #validate
+[17]: #getbasefee
 
-[18]: #parameters-3
+[18]: #getupfrontcost
 
-[19]: #tojson
+[19]: #validate
 
-[20]: #serialize
+[20]: #parameters-4
 
-[21]: #from
+[21]: #serialize
 
-[22]: #properties-1
+[22]: #tojson
 
-[23]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L46-L305 "Source code on GitHub"
+[23]: #from
 
-[24]: https://nodejs.org/api/buffer.html
+[24]: #properties-1
 
-[25]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[25]: #makeeven
 
-[26]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[26]: #parameters-5
 
-[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[27]: #tobn
 
-[28]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L143-L145 "Source code on GitHub"
+[28]: #parameters-6
 
-[29]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[29]: #numbertohex
 
-[30]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L152-L178 "Source code on GitHub"
+[30]: #parameters-7
 
-[31]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L184-L186 "Source code on GitHub"
+[31]: #tobuffer
 
-[32]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L192-L199 "Source code on GitHub"
+[32]: #parameters-8
 
-[33]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L205-L210 "Source code on GitHub"
+[33]: #buffertohex
 
-[34]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L216-L234 "Source code on GitHub"
+[34]: #parameters-9
 
-[35]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L240-L247 "Source code on GitHub"
+[35]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L22-L40 "Source code on GitHub"
 
-[36]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L253-L260 "Source code on GitHub"
+[36]: https://nodejs.org/api/buffer.html
 
-[37]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L266-L272 "Source code on GitHub"
+[37]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[38]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L278-L282 "Source code on GitHub"
+[38]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L79-L425 "Source code on GitHub"
 
-[39]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L289-L304 "Source code on GitHub"
+[39]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[40]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[40]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[41]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L116-L116 "Source code on GitHub"
+[41]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L178-L180 "Source code on GitHub"
 
-[42]: https://github.com/ethereumjs/ethereumjs-util/blob/master/docs/index.md#defineproperties
+[42]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[43]: https://github.com/wanpixiaozi/moacjs-tx/blob/16b38a81a848d8a9776b5fc6eaa11eaf30bd66b4/index.js#L123-L127 "Source code on GitHub"
+[43]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L187-L213 "Source code on GitHub"
+
+[44]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L219-L221 "Source code on GitHub"
+
+[45]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L227-L234 "Source code on GitHub"
+
+[46]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L240-L245 "Source code on GitHub"
+
+[47]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L251-L269 "Source code on GitHub"
+
+[48]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L298-L367 "Source code on GitHub"
+
+[49]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L373-L380 "Source code on GitHub"
+
+[50]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L386-L392 "Source code on GitHub"
+
+[51]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L398-L402 "Source code on GitHub"
+
+[52]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L409-L424 "Source code on GitHub"
+
+[53]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[54]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L149-L149 "Source code on GitHub"
+
+[55]: https://github.com/wanpixiaozi/moacjs-tx/blob/master/docs/index.md#defineproperties
+
+[56]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L156-L160 "Source code on GitHub"
+
+[57]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L430-L435 "Source code on GitHub"
+
+[58]: https://github.com/ethereum/web3.js/issues/1170
+
+[59]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L444-L450 "Source code on GitHub"
+
+[60]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L459-L472 "Source code on GitHub"
+
+[61]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L487-L509 "Source code on GitHub"
+
+[62]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L516-L519 "Source code on GitHub"
