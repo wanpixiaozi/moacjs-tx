@@ -4,7 +4,6 @@ const fees = require('ethereum-common/params.json')
 const BN = moacUtil.BN
 const RLP = require('eth-lib/lib/rlp')
 const Bytes = require('eth-lib/lib/bytes')
-const utils = require('./utils.js')
 const Hash = require('eth-lib/lib/hash')
 const secp256k1 = require('secp256k1')
 const numberToBN = require('number-to-bn')
@@ -24,7 +23,7 @@ function ecsign (msgHash, privateKey) {
   // Convert the input string to Buffer
   if (typeof msgHash === 'string') {
     if (moacUtil.isHexString(msgHash)) {
-      msgHash = Buffer.from(utils.makeEven(moacUtil.stripHexPrefix(msgHash)), 'hex')
+      msgHash = Buffer.from(makeEven(moacUtil.stripHexPrefix(msgHash)), 'hex')
     }
   }
 
