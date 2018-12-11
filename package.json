@@ -1,6 +1,6 @@
 {
   "name": "moacjs-tx",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "A simple module for creating, manipulating and signing moac transactions",
   "main": "es5/index.js",
   "scripts": {
