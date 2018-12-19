@@ -1,5 +1,5 @@
 # SYNOPSIS 
-[![NPM Package](https://img.shields.io/badge/npm-v1.1.2-blue.svg)](https://www.npmjs.org/package/moacjs-tx)
+[![NPM Package](https://img.shields.io/badge/npm-v1.1.3-blue.svg)](https://www.npmjs.org/package/moacjs-tx)
 [![Build Status](https://travis-ci.org/wanpixiaozi/moacjs-tx.svg?branch=master)](https://travis-ci.org/wanpixiaozi/moacjs-tx)
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)  
