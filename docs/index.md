@@ -52,7 +52,7 @@ Returns **[Object][37]**
 
 ## Transaction
 
-[index.js:79-425][38]
+[index.js:76-422][38]
 
 Creates a new transaction object.
 
@@ -65,9 +65,7 @@ Creates a new transaction object.
     -   `data.to` **[Buffer][36]** to the to address
     -   `data.value` **[Buffer][36]** the amount of moac sent
     -   `data.data` **[Buffer][36]** this will contain the data of the message or the init of a contract
-    -   `data.v` **[Buffer][36]** EC recovery ID
-    -   `data.r` **[Buffer][36]** EC signature parameter
-    -   `data.s` **[Buffer][36]** EC signature parameter
+    -   `data.shardingFlag` **[Buffer][36]** choose sharding or not
     -   `data.chainId` **[Number][40]** moac chainId - mainnet: 99, testnet: 101
 
 ### Properties
@@ -78,22 +76,22 @@ Creates a new transaction object.
 
 ```javascript
 var rawTx = {
-  nonce: '0x00',
-  gasPrice: '0x09184e72a000',
-  gasLimit: '0x2710',
-  to: '0x0000000000000000000000000000000000000000',
-  value: '0x00',
-  data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057',
-  v: '0x1c',
-  r: '0x5e1d3a76fbf824220eafc8c79ad578ad2b67d01b0c2425eb1f1347e8f50882ab',
-  s: '0x5bd428537f05f9830e93792f90ea6a3e2d1ee84952dd96edbae9f658f831ab13'
+nonce: '0x00',
+gasPrice: '0x09184e72a000',
+gasLimit: '0x2710',
+to: '0x0000000000000000000000000000000000000000',
+value: '0x00',
+data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057',
+shardingFlag: 0,
+// chainId - mainnet: 99, testnet: 101
+chainId: 101
 };
 var tx = new Transaction(rawTx);
 ```
 
 ### toCreationAddress
 
-[index.js:178-180][41]
+[index.js:175-177][41]
 
 If the tx's `to` is to the creation address
 
@@ -101,19 +99,19 @@ Returns **[Boolean][42]**
 
 ### hash
 
-[index.js:187-213][43]
+[index.js:184-210][43]
 
 Computes a sha3-256 hash of the serialized tx
 
 #### Parameters
 
--   `includeSignature` **[Boolean][42]** whether or not to inculde the signature (optional, default `true`)
+-   `includeSignature` **[Boolean][42]** whether or not to include the signature (optional, default `true`)
 
 Returns **[Buffer][36]** 
 
 ### getChainId
 
-[index.js:219-221][44]
+[index.js:216-218][44]
 
 returns chain ID
 
@@ -121,7 +119,7 @@ Returns **[Buffer][36]**
 
 ### getSenderAddress
 
-[index.js:227-234][45]
+[index.js:224-231][45]
 
 returns the sender's address
 
@@ -129,7 +127,7 @@ Returns **[Buffer][36]**
 
 ### getSenderPublicKey
 
-[index.js:240-245][46]
+[index.js:237-242][46]
 
 returns the public key of the sender
 
@@ -137,7 +135,7 @@ Returns **[Buffer][36]**
 
 ### verifySignature
 
-[index.js:251-269][47]
+[index.js:248-266][47]
 
 Determines if the signature is valid
 
@@ -145,7 +143,7 @@ Returns **[Boolean][42]**
 
 ### sign
 
-[index.js:298-367][48]
+[index.js:295-364][48]
 
 sign a transaction with a given private key
 
@@ -164,7 +162,7 @@ sign a transaction with a given private key
 
 ### getDataFee
 
-[index.js:373-380][49]
+[index.js:370-377][49]
 
 The amount of gas paid for the data in this tx
 
@@ -172,7 +170,7 @@ Returns **BN**
 
 ### getBaseFee
 
-[index.js:386-392][50]
+[index.js:383-389][50]
 
 the minimum amount of gas the tx must have (DataFee + TxFee + Creation Fee)
 
@@ -180,7 +178,7 @@ Returns **BN**
 
 ### getUpfrontCost
 
-[index.js:398-402][51]
+[index.js:395-399][51]
 
 the up front amount that an account must have for this transaction to be valid
 
@@ -188,7 +186,7 @@ Returns **BN**
 
 ### validate
 
-[index.js:409-424][52]
+[index.js:406-421][52]
 
 validates the signature and checks to see if it has enough gas
 
@@ -200,7 +198,7 @@ Returns **([Boolean][42] \| [String][53])**
 
 ### serialize
 
-[index.js:149-149][54]
+[index.js:146-146][54]
 
 -   **See: [moacjs-util][55]**
 
@@ -210,7 +208,7 @@ Returns **[Buffer][36]**
 
 ### toJSON
 
-[index.js:149-149][54]
+[index.js:146-146][54]
 
 -   **See: [moacjs-util][55]**
 
@@ -220,7 +218,7 @@ Returns **([Array][39] \| [String][53])**
 
 ### from
 
-[index.js:156-160][56]
+[index.js:153-157][56]
 
 #### Properties
 
@@ -228,10 +226,7 @@ Returns **([Array][39] \| [String][53])**
 
 ## makeEven
 
-[index.js:430-435][57]
-
-This function is to resolve the issue
-[https://github.com/ethereum/web3.js/issues/1170][58]
+[index.js:425-430][57]
 
 ### Parameters
 
@@ -239,7 +234,7 @@ This function is to resolve the issue
 
 ## toBN
 
-[index.js:444-450][59]
+[index.js:439-445][58]
 
 Takes an input and transforms it into an BN
 
@@ -251,7 +246,7 @@ Returns **BN** BN
 
 ## numberToHex
 
-[index.js:459-472][60]
+[index.js:454-467][59]
 
 Converts value to it's hex representation
 
@@ -263,7 +258,7 @@ Returns **[String][53]**
 
 ## toBuffer
 
-[index.js:487-509][61]
+[index.js:482-504][60]
 
 Attempts to turn a value into a `Buffer`. As input it supports `Buffer`, `String`, `Number`,
 null/undefined, `BN` and other objects with a `toArray()` method.
@@ -274,7 +269,7 @@ null/undefined, `BN` and other objects with a `toArray()` method.
 
 ## bufferToHex
 
-[index.js:516-519][62]
+[index.js:511-514][61]
 
 Converts a `Buffer` into a hex `String`
 
@@ -352,58 +347,56 @@ Returns **[String][53]**
 
 [34]: #parameters-9
 
-[35]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L22-L40 "Source code on GitHub"
+[35]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L22-L40 "Source code on GitHub"
 
 [36]: https://nodejs.org/api/buffer.html
 
 [37]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[38]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L79-L425 "Source code on GitHub"
+[38]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L76-L422 "Source code on GitHub"
 
 [39]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
 [40]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[41]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L178-L180 "Source code on GitHub"
+[41]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L175-L177 "Source code on GitHub"
 
 [42]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[43]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L187-L213 "Source code on GitHub"
+[43]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L184-L210 "Source code on GitHub"
 
-[44]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L219-L221 "Source code on GitHub"
+[44]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L216-L218 "Source code on GitHub"
 
-[45]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L227-L234 "Source code on GitHub"
+[45]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L224-L231 "Source code on GitHub"
 
-[46]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L240-L245 "Source code on GitHub"
+[46]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L237-L242 "Source code on GitHub"
 
-[47]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L251-L269 "Source code on GitHub"
+[47]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L248-L266 "Source code on GitHub"
 
-[48]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L298-L367 "Source code on GitHub"
+[48]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L295-L364 "Source code on GitHub"
 
-[49]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L373-L380 "Source code on GitHub"
+[49]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L370-L377 "Source code on GitHub"
 
-[50]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L386-L392 "Source code on GitHub"
+[50]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L383-L389 "Source code on GitHub"
 
-[51]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L398-L402 "Source code on GitHub"
+[51]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L395-L399 "Source code on GitHub"
 
-[52]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L409-L424 "Source code on GitHub"
+[52]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L406-L421 "Source code on GitHub"
 
 [53]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[54]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L149-L149 "Source code on GitHub"
+[54]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L146-L146 "Source code on GitHub"
 
 [55]: https://github.com/wanpixiaozi/moacjs-tx/blob/master/docs/index.md#defineproperties
 
-[56]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L156-L160 "Source code on GitHub"
+[56]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L153-L157 "Source code on GitHub"
 
-[57]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L430-L435 "Source code on GitHub"
+[57]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L425-L430 "Source code on GitHub"
 
-[58]: https://github.com/ethereum/web3.js/issues/1170
+[58]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L439-L445 "Source code on GitHub"
 
-[59]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L444-L450 "Source code on GitHub"
+[59]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L454-L467 "Source code on GitHub"
 
-[60]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L459-L472 "Source code on GitHub"
+[60]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L482-L504 "Source code on GitHub"
 
-[61]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L487-L509 "Source code on GitHub"
-
-[62]: https://github.com/wanpixiaozi/moacjs-tx/blob/5c571fe43373e46f61bfbfcf45328172d6e0da26/index.js#L516-L519 "Source code on GitHub"
+[61]: https://github.com/wanpixiaozi/moacjs-tx/blob/354514961f91831153e7cf596ad89b3b684b3bc3/index.js#L511-L514 "Source code on GitHub"
