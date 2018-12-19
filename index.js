@@ -75,7 +75,6 @@ function ecsign (msgHash, privateKey) {
  * @param {Buffer} data.s EC signature parameter
  * @param {Number} data.chainId moac chainId - mainnet: 99, testnet: 101
  * */
-
 class Transaction {
   constructor (data) {
     data = data || {}
@@ -181,7 +180,7 @@ class Transaction {
 
   /**
    * Computes a sha3-256 hash of the serialized tx
-   * @param {Boolean} [includeSignature=true] whether or not to inculde the signature
+   * @param {Boolean} [includeSignature=true] whether or not to include the signature
    * @return {Buffer}
    */
   hash (includeSignature) {
@@ -424,8 +423,6 @@ class Transaction {
   }
 }
 /**
- * This function is to resolve the issue
- * https://github.com/ethereum/web3.js/issues/1170
  */
 function makeEven (hex) {
   if (hex.length % 2 === 1) {
